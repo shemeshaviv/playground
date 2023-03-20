@@ -1,1 +1,1 @@
-# A set of custom examples/turorials on different programming lanuages
+# A set of custom examples/turorials on different programming languages
