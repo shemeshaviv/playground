@@ -64,6 +64,11 @@ class Stack
        return poped->_item;
     }
 
+    int peep()
+    {
+        return _top->_item;
+    }
+
     void print()
     {
         cout << "(top) -> ";
