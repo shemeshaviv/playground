@@ -69,6 +69,34 @@ node addNodeSorted(node root, int value)
     return root;
 }
 
+node removeNode(node root, int value)
+{
+    if(root == NULL)
+       return NULL;
+    while((root->value == value) && (root->next != NULL))
+    {
+        node old_root = root;
+        root = root->next;
+        free(old_root);
+    }
+    node currentNode = root;
+    node previousNode = currentNode;
+    while(currentNode != NULL)
+    {
+        if(currentNode->value == value)
+        {
+            previousNode->next = currentNode->next;
+            free(currentNode);
+            currentNode=previousNode->next;
+        }
+        else
+        {
+            previousNode = currentNode;
+            currentNode = currentNode->next;
+        }
+    }
+    return root;
+}
 
 void printLinkedList(node root)
 {
@@ -92,5 +120,9 @@ int main()
         printf("Added %d\n", values[i]);
         printLinkedList(root);
     }
+    root = removeNode(root, 7);
+    printf("Removed 7\n");
+    printLinkedList(root);
+
     return 0;
 }
