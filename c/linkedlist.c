@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "linkedlist.h"
 
 struct LinkedList
 {
@@ -7,21 +8,21 @@ struct LinkedList
     struct LinkedList* next;
 };
 
-typedef struct LinkedList *node;    // Define node as pointer of data type struct LinkedList
+typedef struct LinkedList* Node;    // Define node as pointer of data type struct LinkedList
 
-node createNode()
+Node createNode(int value)
 {
-    node newNode;                                      // Declare a node
-    newNode = (node)malloc(sizeof(struct LinkedList)); // Allocate memory using malloc()
+    Node newNode;                                      // Declare a node
+    newNode = (Node)malloc(sizeof(struct LinkedList)); // Allocate memory using malloc()
     newNode->next = NULL;                              // Make next point to NULL
+    newNode->value = value;                            // Set value
     return newNode;                                    // Return the new node
 }
 
-node addNode(node root, int value)
+Node addNode(Node root, int value)
 {
-    node newNode, currentNode; 
-    newNode = createNode(); // Will return a new node with data = value and next pointing to NULL.
-    newNode->value = value; // Add element's value to data part of node
+    Node newNode, currentNode; 
+    newNode = createNode(value); // Will return a new node with data = value and next pointing to NULL.
     if(root == NULL)
     {
         root = newNode;     // When linked list is empty, set root as the new node
@@ -39,11 +40,10 @@ node addNode(node root, int value)
     return root;
 }
 
-node addNodeSorted(node root, int value)
+Node addNodeSorted(Node root, int value)
 {
-    node newNode, currentNode;
-    newNode = createNode();
-    newNode->value = value;
+    Node newNode, currentNode;
+    newNode = createNode(value);
     if(root == NULL)
     {
         root = newNode;
@@ -69,18 +69,18 @@ node addNodeSorted(node root, int value)
     return root;
 }
 
-node removeNode(node root, int value)
+Node removeNode(Node root, int value)
 {
     if(root == NULL)
        return NULL;
     while((root->value == value) && (root->next != NULL))
     {
-        node old_root = root;
+        Node old_root = root;
         root = root->next;
         free(old_root);
     }
-    node currentNode = root;
-    node previousNode = currentNode;
+    Node currentNode = root;
+    Node previousNode = currentNode;
     while(currentNode != NULL)
     {
         if(currentNode->value == value)
@@ -98,9 +98,9 @@ node removeNode(node root, int value)
     return root;
 }
 
-void printLinkedList(node root)
+void printLinkedList(Node root)
 {
-    node current = root;
+    Node current = root;
     printf("(root) -> ");
     while(current!=NULL)
     {
@@ -112,7 +112,7 @@ void printLinkedList(node root)
 
 int main()
 {
-    node root;
+    Node root;
     int values[] = {5,3,10,7};
     for(int i=0; i < sizeof(values) / sizeof(int); i++)
     {
