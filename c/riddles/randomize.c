@@ -17,11 +17,13 @@ void randomize(int arr[], const int N)
 {
     srand(clock());
     int random_index;
+    // Preparing the array. Each number at its own index
     for(int i=0; i < N; i++)
         arr[i] = i+1;
+    // Choosing a random number where the top range decreases on every iteration, switching with the index
     for(int j=N-1; j > 0; j--)
     {
-        random_item = rand() % j;
+        random_index = rand() % j;
         swap(&arr[random_index], &arr[j]);
     }
 }
@@ -35,8 +37,8 @@ void printArray(int arr[], int N)
 
 int main(int argc, char* argv[])
 {
-    int N = 7;
-    int ITERATIONS = 5;
+    const int N = 7;
+    const int ITERATIONS = 5;
     int arr[N];
     for(int i=0; i < ITERATIONS; i++)
     {
