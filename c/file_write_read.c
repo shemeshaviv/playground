@@ -52,8 +52,8 @@ Student read_data(char* filename, int* total)
         printf("Error when trying to read the top total value\n");
         return NULL;
     }
-    Student data = (Student)malloc(sizeof(struct StudentStruct) * *total);
-    if(fread(data, sizeof(struct StudentStruct), *total, file) != *total)
+    Student data = (Student)malloc((*total) * sizeof(struct StudentStruct));  // Allocating the expected amount of student structure
+    if(fread(data, sizeof(struct StudentStruct), *total, file) != *total)     // Expecting to read the total amount
     {
         printf("Error when trying to read the records\n");
         free(data);
