@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
 #define DEBUG true
 
 void debug(char *pointer)
@@ -27,16 +28,21 @@ int str_length2(char string[])
     return i;
 }
 
+void swap(char* p, char* q)
+{
+    char tmp;
+    tmp = *p;
+    *p = *q;
+    *q = tmp;
+}
+
 void reverse_string(char* string)
 {
     char* p = string;
     char* q = p + str_length(string)-1;  // Or use the built-in strlen() in string.h
-    char tmp;
     while(p < q)
     {
-       tmp = *p;
-       *p = *q;
-       *q = tmp;
+       swap(p, q);
        debug(p);
        debug(q);
 
