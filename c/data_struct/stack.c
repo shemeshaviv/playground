@@ -68,6 +68,8 @@ void print_stack(Stack stack)
 int main(int argc, char* argv[])
 {
     Stack stack=(Stack)malloc(sizeof(struct StackStruct));
+    stack->top = NULL;
+
     print_stack(stack);
     push_stack(stack, 'A');
     if(stack==NULL) printf("STACK IS NULL\n");
