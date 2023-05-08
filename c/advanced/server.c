@@ -25,52 +25,53 @@ char* getDateTimeNow()
 
 int main(int argc, char const* argv[])
 {
-	int server_fd, sockopt_ret, new_socket, valread;
-	struct sockaddr_in address;
-	int optval = 1;
+    int server_fd, sockopt_ret, new_socket, valread;
+    struct sockaddr_in address;
+    int optval = 1;
     int msg_count = 0;
-	int addrlen = sizeof(address);
-	char buffer[BUFFER_SIZE] = { 0 };
-	char* msg_to_client = NULL;                 //"Message from server";
+    int addrlen = sizeof(address);
+    char buffer[BUFFER_SIZE] = { 0 };
+    char* msg_to_client = NULL;                 //"Message from server";
+    
     msg_to_client = (char*)malloc(BUFFER_SIZE * sizeof(char));
 
-	// (1) Creating socket file descriptor
+    // (1) Creating socket file descriptor
     server_fd = socket(AF_INET, SOCK_STREAM, 0);
-	if (server_fd < 0) 
+    if (server_fd < 0) 
     {
-		perror("socket failed");
-		exit(EXIT_FAILURE);
-	}
+        perror("socket failed");
+        exit(EXIT_FAILURE);
+    }
     printf("Socket file-descriptor created (server_fd=%d)\n", server_fd);
 
-	// The settings of sockopt here is not mandatory (At least when working on Linux)
-	/* 
+    // The settings of sockopt here is not mandatory (At least when working on Linux)
+    /* 
     sockopt_ret= setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &optval, sizeof(optval));
     if(sockopt_ret)
     {
-		perror("setsockopt failed");
-		exit(EXIT_FAILURE);
-	}
+        perror("setsockopt failed");
+        exit(EXIT_FAILURE);
+    }
     printf("Attached socket successfully (sockopt_ret=%d)\n", sockopt_ret);
     */
 
-	address.sin_family = AF_INET;
-	address.sin_addr.s_addr = INADDR_ANY;
-	address.sin_port = htons(PORT);
+    address.sin_family = AF_INET;
+    address.sin_addr.s_addr = INADDR_ANY;
+    address.sin_port = htons(PORT);
 
-	// Binding with the sockaddr address information 
-	if (bind(server_fd, (struct sockaddr*)&address,	sizeof(address)) < 0) 
+    // Binding with the sockaddr address information 
+    if (bind(server_fd, (struct sockaddr*)&address,	sizeof(address)) < 0) 
     {
-		perror("bind failed");
-		exit(EXIT_FAILURE);
-	}
+        perror("bind failed");
+        exit(EXIT_FAILURE);
+    }
     printf("Bind successfully\n");
 
-	if (listen(server_fd, SOMAXCONN) < 0) 
+    if (listen(server_fd, SOMAXCONN) < 0) 
     {
-		perror("listen");
-		exit(EXIT_FAILURE);
-	}
+        perror("listen");
+        exit(EXIT_FAILURE);
+    }
 
     while(msg_count < MAX_MESSAGES)    // Limiting the amount of messages just for testings clean exit 
     {
@@ -91,10 +92,11 @@ int main(int argc, char const* argv[])
         printf(">>> Reply message sent to client\n");
     }
     printf("Maximum messages reached. Closing connected socket and exitting\n");
-	// closing the connected socket
-	close(new_socket);
-	// closing the listening socket
-	shutdown(server_fd, SHUT_RDWR);
-	return 0;
+
+    // closing the connected socket
+    close(new_socket);
+    // closing the listening socket
+    shutdown(server_fd, SHUT_RDWR);
+    return 0;
 }
 
