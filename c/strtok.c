@@ -19,12 +19,12 @@ void print_tokens(char* tokens[], int N)
 void tokenize(char* str, char* tokens[], int N)
 {
     char* current_token=NULL;
-    tokens[0]=(char*)malloc(MAX_STRING_SIZE * sizeof(char));
-    strcpy(tokens[0],strtok(str,"|"));
+    char* position = str;
     int i;
-    for(i = 1;i<MAX_TOKENS;i++)
+    for(i = 0;i<MAX_TOKENS;i++)
     {
-        current_token=strtok(NULL,"|");
+        current_token=strtok(position,"|");
+        position = NULL;
         if(current_token == NULL)
             break;
         tokens[i]=(char*)malloc(MAX_STRING_SIZE * sizeof(char));
@@ -46,7 +46,8 @@ void tokenize2(char* original_str, char* tokens[], int N)
     string_pos = original_str;
     for(i = 0;i<MAX_TOKENS;i++)
     {
-        current_token=strtok_r(string_pos,original_str,&ptr);
+        current_token=strtok_r(string_pos,"|",&ptr);
+        string_pos=NULL;
         if(current_token == NULL)
             break;
         tokens[i]=(char*)malloc(MAX_STRING_SIZE * sizeof(char));
